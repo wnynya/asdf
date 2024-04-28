@@ -177,6 +177,10 @@ body {
   border-radius: 2rem;
   box-shadow: var(--box-shadow);
   overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0, 0.65, 0.35, 1);
+}
+#menu .menu > .wrapper > .text > .desc > .title > .buttons.hide {
+  transform: scale(0);
 }
 #menu .menu > .wrapper > .text > .desc > .title > .buttons > * {
   height: 100%;
