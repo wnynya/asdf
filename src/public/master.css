@@ -1,0 +1,51 @@
+:root {
+  --th: rgb(255, 100, 60);
+  --thl: hsl(12, 100%, 80%);
+  --bg: rgb(255, 255, 255);
+  --bgl: rgb(245, 245, 245);
+  --fg: rgb(0, 0, 0);
+  --fgl: rgb(128, 128, 128);
+
+  --sans-serif: 'Pretendard Variable', sans-serif;
+  --box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
+}
+
+html {
+  font-size: 16px;
+  font-family: var(--sans-serif);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: 1rem;
+}
+
+button {
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: none;
+  font-family: var(--sans-serif);
+  font-size: 1rem;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+[layer] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
