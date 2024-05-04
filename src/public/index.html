@@ -2,7 +2,10 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
     <meta name="format-detection" content="telephone=no" />
     <meta name="theme-color" content="#ff643c" />
 
@@ -51,15 +54,19 @@
   <body>
     <section id="cover">
       <div class="image">
-        <img src="IMG_1119_resized.jpg" />
+        <img src="" />
       </div>
+
+      <div class="gradient"></div>
+
       <div class="shadow"></div>
     </section>
 
     <nav id="nav">
-      <div class="left">
-        <div class="booth">부스 이름</div>
-        <div class="table">테이블 2</div>
+      <div class="left desc">
+        <div class="booth"></div>
+        <span>/</span>
+        <div class="table"></div>
       </div>
 
       <div class="right">
@@ -79,8 +86,8 @@
     <main id="main">
       <header id="header">
         <div class="desc">
-          <div class="booth">부스 이름</div>
-          <div class="table">테이블 2</div>
+          <div class="booth"></div>
+          <div class="table"></div>
         </div>
       </header>
 
@@ -89,27 +96,34 @@
       <section id="gradient"></section>
     </main>
 
-    <section id="panel-bottom">
-      <div class="bg" id="button-panel-bottom-close"></div>
+    <section id="panel-cart" phase="close">
+      <div class="bg" id="button-panel-cart-close"></div>
 
       <div class="fg-content">
         <div class="content cart">
           <div class="title">
             <div class="text">담은 메뉴</div>
-            <button id="button-panel-bottom-cart-close" class="close">
+            <button id="button-panel-cart-cart-close" class="close">
               <span class="material-symbols-outlined"> close </span>
             </button>
           </div>
           <div class="list"></div>
-          <div class="total"></div>
+          <div class="total">
+            <div class="count"></div>
+            <div class="price"></div>
+          </div>
         </div>
 
         <div class="content order">
           <div class="title">
-            <div class="text"></div>
-            <button id="button-panel-bottom-order-close" class="close">
+            <div class="text">담은 메뉴</div>
+            <button id="button-panel-cart-order-close" class="close">
               <span class="material-symbols-outlined"> close </span>
             </button>
+          </div>
+          <div class="message">
+            <div class="main"></div>
+            <div class="sub"></div>
           </div>
         </div>
       </div>
@@ -117,25 +131,25 @@
       <div class="fg-message"></div>
 
       <div class="fg-control">
-        <button id="button-panel-bottom-left">
+        <button id="button-panel-cart-left">
           <span class="text">직원 호출</span>
         </button>
-        <button id="button-panel-bottom-right">
+        <button id="button-panel-cart-right" disabled>
           <span class="text">담은 메뉴 보기</span>
-          <span class="count" linemessage>메뉴 12개 담음</span>
+          <span class="count" linemessage phase="hide"></span>
         </button>
       </div>
     </section>
 
-    <section id="panel-options">
+    <section id="panel-options" class="panel-left" phase="close">
       <div class="fg-content"></div>
     </section>
 
-    <section id="panel-history">
+    <section id="panel-history" class="panel-left" phase="close">
       <div class="fg-content"></div>
     </section>
 
-    <section id="panel-menu">
+    <section id="panel-menu" class="panel-left" phase="close">
       <div class="fg-content"></div>
     </section>
 

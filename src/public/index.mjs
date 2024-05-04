@@ -1,80 +1,150 @@
-class Client {
-  constructor() {
-    this.UI = new UI(this);
+'use strict';
 
-    this.menu = {
-      'menu-1': {
-        id: 'menu-1',
-        name: '메뉴 이름',
-        price: 12000,
-        desc: '아아아아아아아',
-        category: '추천 메뉴',
-      },
-      'menu-2': {
-        id: 'menu-2',
-        name: '메뉴 이름',
-        price: 12000,
-        desc: '아아아아아아아',
-        category: '추천 메뉴',
-      },
-      'menu-3': {
-        id: 'menu-3',
-        name: '메뉴 이름',
-        price: 12000,
-        desc: '아아아아아아아',
-        category: '뚜루룹',
-      },
-      'menu-4': {
-        id: 'menu-4',
-        name: '메뉴 이름',
-        price: 12000,
-        desc: '아아아아아아아',
-        category: '뚜루룹',
-      },
-      'menu-5': {
-        id: 'menu-5',
-        name: '메뉴 이름',
-        price: 12000,
-        desc: '아아아아아아아',
-        category: '뚜루룹',
-        image: 'a',
-      },
-      'menu-6': {
-        id: 'menu-6',
-        name: '메뉴 이름',
-        price: 12000,
-        desc: '아아아아아아아',
-        category: '뚜루룹',
-      },
-      'menu-alc-1': {
-        id: 'menu-alc-1',
-        name: '소주',
-        price: 5000,
-        desc: '아아아아아아아',
-        category: '주류',
-      },
-      'menu-alc-2': {
-        id: 'menu-alc-2',
-        name: '맥주',
-        price: 5000,
-        desc: '아아아아아아아',
-        category: '주류',
-      },
-      'menu-alc-3': {
-        id: 'menu-alc-3',
-        name: '샌주',
-        price: 5000,
-        desc: '아아아아아아아',
-        category: '주류',
-      },
+class Client {
+  constructor(bid, tid) {
+    if (!bid || !tid) {
+      window.location.href = '/error-403';
+      return;
+    }
+    this.bid = bid;
+    this.tid = tid;
+    this.booth = {
+      booth_name: '테스트포차',
+      bank: '한국은행',
+      banker_name: '홍길동',
+      account_number: '1234-1234',
+      booth_image_url: '/images/bg.jpg',
     };
+    this.table = {
+      id: 1,
+      table_name: '테이블 1',
+    };
+    this.menus = {};
     this.cart = {};
+    this.history = [];
+
+    const menus = [
+      {
+        menuId: 1,
+        category: '추천 메뉴',
+        menu_name: '닭꼬치 데리야끼맛',
+        description: '무려 사진이 있는 메뉴',
+        price: 4000,
+        menu_img_url: 'images/닭꼬치 데리야끼맛.jpg',
+      },
+      {
+        menuId: 2,
+        category: '추천 메뉴',
+        menu_name: '메뉴 이름',
+        description: '아아아아아아아',
+        price: 12000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 3,
+        category: '추천 메뉴',
+        menu_name: '츄파춥스 딸기맛',
+        description: '블랙카우맛',
+        price: 2100000,
+        menu_img_url: 'images/츄파춥스 딸기맛.jpg',
+      },
+      {
+        menuId: 4,
+        category: '추천 메뉴',
+        menu_name: '딸기초코김치찌개',
+        description: '꼭 먹으셈 두번 먹으셈',
+        price: 27000,
+        menu_img_url: 'images/딸기초코김치찌개.jpg',
+      },
+      {
+        menuId: 5,
+        category: '추천 메뉴',
+        menu_name:
+          '이름도완전길고내용도완전길어서페이지유아이를망가뜨릴지도모르는말도안되는테스트용메뉴이름',
+        description:
+          'Minecraft(Minecraft) 는 마르쿠스 "노치" 페르손에 의해 개발된 샌드박스형 게임으로서, 마이크로소프트 스튜디오 산하의 Mojang Studios에서 관리하고 있다. Minecraft는 Infiniminer 에서 영감을 받은 게임이다.',
+        price: 30000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 6,
+        category: '추천 메뉴',
+        menu_name: '벽돌',
+        description: '먹으면 죽을듯',
+        price: 294000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 201,
+        category: '추천 메뉴',
+        menu_name: '콘치즈',
+        description: '몰라',
+        price: 12000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 202,
+        category: '추천 메뉴',
+        menu_name: '모둠 나쵸',
+        description: '치즈듬뿍 짱 맛있는 나쵸',
+        price: 23000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 911,
+        category: '주류 · 음료',
+        menu_name: '참이슬',
+        description: '',
+        price: 4000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 912,
+        category: '주류 · 음료',
+        menu_name: '처음처럼',
+        description: '',
+        price: 4000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 921,
+        category: '주류 · 음료',
+        menu_name: '카스',
+        description: '',
+        price: 5000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 941,
+        category: '주류 · 음료',
+        menu_name: '콜라',
+        description: '뚱캔 355ml',
+        price: 2000,
+        menu_img_url: '',
+      },
+      {
+        menuId: 942,
+        category: '주류 · 음료',
+        menu_name: '사이다',
+        description: '뚱캔 355ml',
+        price: 2000,
+        menu_img_url: '',
+      },
+    ];
+    for (const menu of menus) {
+      this.menus[menu.menuId] = menu;
+    }
 
     this.init();
   }
 
   async init() {
-    this.UI.displayMenu();
+    MAIN.init();
+    PANEL_CART.init();
+    PANEL_HISTORY.init();
+
+    MAIN.displayBooth(this.booth, this.table);
+    MAIN.displayMenu(this.booth, this.menus);
   }
 
   async getMenu() {}
@@ -85,80 +155,316 @@ class Client {
 
   destroy() {}
 
-  MENU = {
-    getCategoryElement(menu) {
-      const element = document.createElement('div');
-      element.classList.add('category');
-      element.setAttribute('category', menu.category);
-      let html = ``;
-      html += `<div class="title">${menu.category}</div>`;
-      html += `<div class="content">`;
-      html += `</div>`;
-      element.innerHTML = html;
-      return element;
-    },
+  async call() {
+    await (() => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 2000);
+      });
+    })();
+  }
 
-    getElement(menu) {
-      const element = document.createElement('div');
-      element.classList.add('menu');
-      element.setAttribute('menu', menu.id);
-      let html = ``;
-      html += `<div class="wrapper">`;
-      if (menu.image) {
-        html += `  <div class="image">`;
-        html += `    <img src="${menu.image}" />`;
-        html += `  </div>`;
-      }
-      html += `  <div class="text">`;
-      html += `    <div class="desc">`;
-      html += `      <div class="title">`;
-      html += `        <span class="text">${menu.name}</span>`;
-      html += `        <div class="buttons hide">`;
-      html += `          <button class="remove"><span class="material-symbols-outlined"> remove </span></button>`;
-      html += `          <div class="count">0</div>`;
-      html += `          <button class="add"><span class="material-symbols-outlined"> add </span></button>`;
-      html += `        </div>`;
-      html += `      </div>`;
-      html += `      <div class="content">${menu.desc}</div>`;
-      html += `    </div>`;
-      html += `    <div class="price">${menu.price.toLocaleString(
-        'ko-KR'
-      )} 원</div>`;
-      html += `  </div>`;
-      html += `</div>`;
-      element.innerHTML = html;
-      return element;
-    },
-  };
+  addMenuInCart(menu, count = 1) {
+    if (!this.cart[menu.menuId]) {
+      this.cart[menu.menuId] = 0;
+    }
 
-  CART = {
-    addMenu(menu) {},
+    this.cart[menu.menuId] += count;
 
-    removeMenu(menu) {},
+    PANEL_CART.updateLabel(this.cart);
+  }
 
-    order() {},
-  };
+  removeMenuInCart(menu, count = 1) {
+    if (!this.cart[menu.menuId]) {
+      return;
+    }
+
+    this.cart[menu.menuId] -= count;
+    if (this.cart[menu.menuId] <= 0) {
+      delete this.cart[menu.menuId];
+    }
+
+    PANEL_CART.updateLabel(this.cart);
+  }
+
+  async orderMenuInCart() {
+    await (() => {
+      return new Promise((resolve) => {
+        const timestamp = Date.now();
+        for (const item in CLIENT.cart) {
+          const menu = CLIENT.menus[item];
+          const order = {
+            timestamp: timestamp,
+            menu_id: item,
+            menu_name: menu.menu_name,
+            price: menu.price,
+            quantity: CLIENT.cart[item],
+            state: Math.random() > 0.5 ? '조리완료' : '조리중',
+          };
+          CLIENT.history.push(order);
+        }
+        CLIENT.cart = {};
+        setTimeout(() => {
+          resolve();
+        }, 2000);
+      });
+    })();
+  }
 }
 
-class UI {
-  constructor(client) {
-    this.client = client;
-    this.element = {
-      panel: {
-        bottom: document.querySelector('#panel-bottom'),
-      },
-    };
-    this.button = {};
+const MAIN = {
+  init() {
+    document.addEventListener('scroll', (event) => {
+      MAIN.scroll();
+    });
+    MAIN.scroll();
 
-    const buttons = {
-      'panel-bottom-left': (event) => {
-        const phase = this.element.panel.bottom.getAttribute('phase');
+    document
+      .querySelector('#button-lang')
+      .addEventListener('click', async (event) => {
+        alert('언어 바꾸는 기능은 아직 없음');
+      });
+  },
+
+  displayBooth(booth, table) {
+    // 부스 이름, 테이블 이름 설정
+    document.querySelector('#nav .desc .booth').innerHTML = booth.booth_name;
+    document.querySelector('#nav .desc .table').innerHTML = table.table_name;
+    document.querySelector('#main .desc .booth').innerHTML = booth.booth_name;
+    document.querySelector('#main .desc .table').innerHTML = table.table_name;
+
+    // 부스 이미지 설정
+    document.querySelector('#cover .image img').src = booth.booth_image_url;
+  },
+
+  displayMenu(booth, menus) {
+    let categories = {};
+
+    for (const [menuID, menu] of Object.entries(menus)) {
+      if (!categories[menu.category]) {
+        const categoryElement = this.getCategoryElement(menu);
+        categories[menu.category] = categoryElement;
+      }
+
+      const menuElement = this.getMenuElement(menu);
+      menuElement.addEventListener('click', (event) => {
+        let target = event.target;
+        while (!target.classList.contains('menu')) {
+          target = target.parentElement;
+        }
+
+        const menuID = target.getAttribute('menu');
+        const menu = menus[menuID];
+        PANEL_MENU.open(menu, booth);
+
+        target.style.background = 'rgba(255, 100, 60, 0.5)';
+        setTimeout(() => {
+          target.style.background = 'rgba(255, 100, 60, 0)';
+          target.style.transition = 'background 0.4s ease-out';
+        }, 100);
+        setTimeout(() => {
+          target.style.background = null;
+          target.style.transition = null;
+        }, 500);
+      });
+
+      categories[menu.category]
+        .querySelector('.content')
+        .appendChild(menuElement);
+    }
+
+    document.querySelector('#menu').innerHTML = '';
+    for (const category in categories) {
+      document.querySelector('#menu').appendChild(categories[category]);
+    }
+  },
+
+  updateMenu() {},
+
+  getCategoryElement(menu) {
+    const element = document.createElement('div');
+    element.classList.add('category');
+    element.setAttribute('category', menu.category);
+    let html = ``;
+    html += `<div class="title">${menu.category}</div>`;
+    html += `<div class="content">`;
+    html += `</div>`;
+    element.innerHTML = html;
+    return element;
+  },
+
+  getMenuElement(menu) {
+    const element = document.createElement('div');
+    element.classList.add('menu');
+    element.setAttribute('menu', menu.menuId);
+    let html = ``;
+    html += `<div class="wrapper">`;
+    if (menu.menu_img_url) {
+      html += `  <div class="image">`;
+      html += `    <img src="${menu.menu_img_url}" />`;
+      html += `  </div>`;
+    }
+    html += `  <div class="content">`;
+    html += `    <div class="main">`;
+    html += `      <div class="info">`;
+    html += `        <div class="title">`;
+    html += `          <span class="text">${menu.menu_name}</span>`;
+    html += `        </div>`;
+    if (menu.description) {
+      html += `      <div class="desc">${menu.description}</div>`;
+    }
+    html += `      </div>`;
+    if (menu.control) {
+      html += `      <div class="buttons">`;
+      html += `        <button class="minus"><span class="material-symbols-outlined"> remove </span></button>`;
+      html += `        <div class="count">0</div>`;
+      html += `        <button class="plus"><span class="material-symbols-outlined"> add </span></button>`;
+      html += `      </div>`;
+    }
+    if (menu.state) {
+      html += `      <div class="states">`;
+      html += `        <div class="state" state="${menu.state}">`;
+      html += `          ${menu.state}`;
+      html += `        </div>`;
+      html += `      </div>`;
+    }
+    html += `    </div>`;
+    html += `    <div class="price">`;
+    html += `      <span class="single">${menu.price.toLocaleString(
+      'ko-KR'
+    )}원</span>`;
+    if (menu.count) {
+      html += `      <span class="x">×</span>`;
+      html += `      <span class="count">${menu.count}개</span>`;
+      html += `      <span class="e">=</span>`;
+      html += `      <span class="total">${(
+        menu.price * menu.count
+      ).toLocaleString('ko-KR')}원</span>`;
+    }
+    html += `    </div>`;
+    html += `  </div>`;
+    html += `</div>`;
+    element.innerHTML = html;
+    return element;
+  },
+
+  scrollOff() {
+    document.body.style.overflow = 'hidden';
+  },
+
+  scrollOn() {
+    document.body.style.overflow = 'auto';
+  },
+
+  scroll() {
+    const h = document.querySelector('header');
+    const s = scrollY;
+    const ht = h.offsetTop - Math.rem(3);
+
+    let p2 = Math.min(100, Math.max(0, (s / ht) * 100));
+
+    const nav = document.querySelector('nav');
+    const shadow = document.querySelector('#cover > .shadow');
+
+    shadow.style.background = `rgba(0,0,0,${p2 / 200})`;
+    shadow.style.webkitBackdropFilter = `blur(${p2 / 10}px)`;
+    shadow.style.backdropFilter = `blur(${p2 / 10}px)`;
+
+    nav.setAttribute('phase', s < ht ? 'up' : 'down');
+  },
+};
+
+const PANEL_MENU = {
+  panel: document.querySelector('#panel-menu'),
+
+  open(menu, booth) {
+    let html = ``;
+    html += `<div class="top">`;
+    html += `  <button id="button-panel-menu-close">`;
+    html += `    <span class="material-symbols-outlined"> arrow_back </span>`;
+    html += `  </button>`;
+    html += `  <div class="title">메뉴 담기</div>`;
+    html += `</div>`;
+    html += `<div class="main">`;
+    html += `<div class="topmargin"></div>`;
+    if (menu.menu_img_url) {
+      html += `<div class="image">`;
+      html += `  <img src="${menu.menu_img_url}" />`;
+      html += `</div>`;
+    }
+    html += `<div class="title">${menu.menu_name}</div>`;
+    html += `<div class="desc">${menu.description}</div>`;
+    html += `<div class="options">`;
+    html += `  <div class="option">`;
+    html += `    <div class="price">${menu.price.toLocaleString(
+      'ko-KR'
+    )}원</div>`;
+    html += `    <div class="control">`;
+    html += `      <div class="buttons hide">`;
+    html += `        <button class="minus"><span class="material-symbols-outlined"> remove </span></button>`;
+    html += `        <div class="count">1</div>`;
+    html += `        <button class="plus"><span class="material-symbols-outlined"> add </span></button>`;
+    html += `      </div>`;
+    html += `    </div>`;
+    html += `  </div>`;
+    html += `</div>`;
+    html += `</div>`;
+    html += `<div class="bottom">`;
+    html += `  <button id="button-panel-menu-add">메뉴 담기</button>`;
+    html += `</div>`;
+
+    this.panel.innerHTML = html;
+
+    this.panel.querySelector('.top button').addEventListener('click', () => {
+      this.close();
+    });
+
+    let count = 1;
+    this.panel.querySelector('.buttons .minus').disabled = count <= 1;
+    this.panel
+      .querySelector('.buttons .minus')
+      .addEventListener('click', () => {
+        count--;
+        this.panel.querySelector('.buttons .count').innerHTML = count;
+        this.panel.querySelector('.buttons .minus').disabled = count <= 1;
+      });
+    this.panel.querySelector('.buttons .plus').addEventListener('click', () => {
+      count++;
+      this.panel.querySelector('.buttons .count').innerHTML = count;
+      this.panel.querySelector('.buttons .minus').disabled = count <= 1;
+    });
+
+    this.panel.querySelector('.bottom button').addEventListener('click', () => {
+      CLIENT.addMenuInCart(menu, count);
+      this.close();
+    });
+
+    this.panel.setAttribute('phase', 'open');
+    MAIN.scrollOff();
+  },
+
+  close() {
+    this.panel.setAttribute('phase', 'close');
+    MAIN.scrollOn();
+  },
+};
+
+const PANEL_CART = {
+  panel: document.querySelector('#panel-cart'),
+  orderProcessing: false,
+
+  init() {
+    this.panel
+      .querySelector('#button-panel-cart-left')
+      .addEventListener('click', () => {
+        const phase = this.panel.getAttribute('phase');
         switch (phase) {
           case 'cart': {
             break;
           }
           case 'order': {
-            this.PANEL_BOTTOM$close();
+            this.close();
             break;
           }
           default: {
@@ -166,449 +472,203 @@ class UI {
             break;
           }
         }
-      },
-      'panel-bottom-right': (event) => {
-        const phase = this.element.panel.bottom.getAttribute('phase');
+      });
+    this.panel
+      .querySelector('#button-panel-cart-right')
+      .addEventListener('click', () => {
+        const phase = this.panel.getAttribute('phase');
         switch (phase) {
           case 'cart': {
-            this.PANEL_BOTTOM$openOrder();
+            this.order(CLIENT.menus, CLIENT.cart);
             break;
           }
           case 'order': {
             break;
           }
           default: {
-            this.PANEL_BOTTOM - openCart();
+            this.open(CLIENT.menus, CLIENT.cart);
             break;
           }
         }
-      },
-      'panel-bottom-cart-close': (event) => {
-        this.PANEL_BOTTOM$close();
-      },
-      'panel-bottom-order-close': (event) => {
-        this.PANEL_BOTTOM$close();
-      },
-      'panel-bottom-close': (event) => {
-        this.PANEL_BOTTOM$close();
-      },
-    };
-
-    for (const buttonID in buttons) {
-      const buttonElement = document.querySelector(`#button-${buttonID}`);
-      buttonElement.addEventListener('click', buttons[buttonID]);
-      const buttonName = buttonID.toUpperCase().replace(/\-/g, '_');
-      this.button[buttonName] = buttonElement;
-    }
-
-    this.PANEL_BOTTOM = {};
-  }
-
-  displayMenu() {
-    document.querySelector('#menu').innerHTML = '';
-
-    let categories = {};
-    for (const id in this.client.menu) {
-      const menu = this.client.menu[id];
-      if (!categories[menu.category]) {
-        const categoryElement = createCategoryElement(menu.category);
-        categories[menu.category] = categoryElement;
-      }
-      const menuElement = this.createMenuElement(menu);
-      menuElement.addEventListener('click', (event) => {
-        let target = event.target;
-        let mode = 'normal';
-        while (!target.classList.contains('menu')) {
-          if (target.classList.contains('remove')) {
-            mode = 'remove';
-          }
-          if (target.classList.contains('add')) {
-            mode = 'add';
-          }
-          target = target.parentElement;
-        }
-
-        const menuID = target.getAttribute('menu');
-        console.log(_this);
-        let menu = _this.client.menu[menuID];
-
-        if (mode == 'normal' && !_this.client.cart[menu.id]) {
-          blink();
-          this.addMenu(menu);
-        } else if (mode == 'add') {
-          blink();
-          this.addMenu(menu);
-        } else if (mode == 'remove') {
-          blink();
-          this.removeMenu(menu);
-        }
-
-        function blink() {
-          target.style.background = 'rgba(255, 100, 60, 0.5)';
-          setTimeout(() => {
-            target.style.background = 'rgba(255, 100, 60, 0)';
-            target.style.transition = 'background 0.4s ease-out';
-          }, 100);
-          setTimeout(() => {
-            target.style.background = null;
-            target.style.transition = null;
-          }, 500);
-        }
       });
-      categories[menu.category]
-        .querySelector('.content')
+    this.panel
+      .querySelector('#button-panel-cart-close')
+      .addEventListener('click', () => {
+        this.close();
+      });
+    this.panel
+      .querySelector('#button-panel-cart-cart-close')
+      .addEventListener('click', () => {
+        this.close();
+      });
+    this.panel
+      .querySelector('#button-panel-cart-order-close')
+      .addEventListener('click', () => {
+        this.close();
+      });
+  },
+
+  open(menus, cart) {
+    this.panel.querySelector('.fg-content > .cart > .list').innerHTML = '';
+    for (let [menuID, count] of Object.entries(cart)) {
+      const menu = JSON.parse(JSON.stringify(menus[menuID]));
+      menu.control = true;
+      const menuElement = MAIN.getMenuElement(menu);
+      menuElement.querySelector('.buttons .count').innerHTML = count;
+      menuElement.querySelector('.buttons .minus span').innerHTML =
+        count > 1 ? 'remove' : 'delete';
+      menuElement
+        .querySelector('.buttons .minus')
+        .addEventListener('click', () => {
+          count--;
+          CLIENT.removeMenuInCart(menu, 1);
+          this.updateTotal(menus, cart);
+          menuElement.querySelector('.buttons .count').innerHTML = count;
+          menuElement.querySelector('.buttons .minus span').innerHTML =
+            count > 1 ? 'remove' : 'delete';
+          if (count <= 0) {
+            menuElement.parentElement.removeChild(menuElement);
+          }
+          if (Object.keys(CLIENT.cart).length <= 0) {
+            this.close();
+          }
+        });
+      menuElement
+        .querySelector('.buttons .plus')
+        .addEventListener('click', () => {
+          count++;
+          CLIENT.addMenuInCart(menu, 1);
+          this.updateTotal(menus, cart);
+          menuElement.querySelector('.buttons .count').innerHTML = count;
+          menuElement.querySelector('.buttons .minus span').innerHTML =
+            count > 1 ? 'remove' : 'delete';
+        });
+
+      this.panel
+        .querySelector('.fg-content > .cart > .list')
         .appendChild(menuElement);
     }
+    this.updateTotal(menus, cart);
 
-    for (const category in categories) {
-      document.querySelector('#menu').appendChild(categories[category]);
-    }
-
-    const _this = this;
-    function createCategoryElement(data) {
-      const element = document.createElement('div');
-      element.classList.add('category');
-      element.setAttribute('category', data);
-      let html = ``;
-      html += `<div class="title">${data}</div>`;
-      html += `<div class="content">`;
-      html += `</div>`;
-      element.innerHTML = html;
-      return element;
-    }
-    function createMenuElement(data) {
-      const element = document.createElement('div');
-      element.classList.add('menu');
-      element.setAttribute('menu', data.id);
-      let html = ``;
-      html += `<div class="wrapper">`;
-      if (data.image) {
-        html += `  <div class="image">`;
-        html += `    <img src="${data.image}" />`;
-        html += `  </div>`;
-      }
-      html += `  <div class="text">`;
-      html += `    <div class="desc">`;
-      html += `      <div class="title">`;
-      html += `        <span class="text">${data.name}</span>`;
-      html += `        <div class="buttons hide">`;
-      html += `          <button class="remove"><span class="material-symbols-outlined">remove</span></button>`;
-      html += `          <div class="count">0</div>`;
-      html += `          <button class="add"><span class="material-symbols-outlined">add</span></button>`;
-      html += `        </div>`;
-      html += `      </div>`;
-      html += `      <div class="content">${data.desc}</div>`;
-      html += `    </div>`;
-      html += `    <div class="price">${data.price.toLocaleString(
-        'ko-KR'
-      )} 원</div>`;
-      html += `  </div>`;
-      html += `</div>`;
-      element.innerHTML = html;
-      element.addEventListener('click', (event) => {
-        let target = event.target;
-        let mode = 'normal';
-        while (!target.classList.contains('menu')) {
-          if (target.classList.contains('remove')) {
-            mode = 'remove';
-          }
-          if (target.classList.contains('add')) {
-            mode = 'add';
-          }
-          target = target.parentElement;
-        }
-
-        const menuID = target.getAttribute('menu');
-        console.log(_this);
-        let menu = _this.client.menu[menuID];
-
-        if (mode == 'normal' && !_this.client.cart[menu.id]) {
-          blink();
-          _this.addMenu(menu);
-        } else if (mode == 'add') {
-          blink();
-          _this.addMenu(menu);
-        } else if (mode == 'remove') {
-          blink();
-          _this.removeMenu(menu);
-        }
-
-        function blink() {
-          target.style.background = 'rgba(255, 100, 60, 0.5)';
-          setTimeout(() => {
-            target.style.background = 'rgba(255, 100, 60, 0)';
-            target.style.transition = 'background 0.4s ease-out';
-          }, 100);
-          setTimeout(() => {
-            target.style.background = null;
-            target.style.transition = null;
-          }, 500);
-        }
-        /*
-        const rect = target.getBoundingClientRect();
-        const temp = document.createElement('div');
-        temp.style.position = 'absolute';
-        temp.style.top = `${rect.top + window.scrollY}px`;
-        temp.style.left = `0px`;
-        temp.style.width = `${target.offsetWidth}px`;
-        temp.style.height = `${target.offsetHeight}px`;
-        temp.style.background = 'rgb(255, 100, 60, 0.5)';
-        temp.style.borderRadius = '0.5rem';
-        temp.style.transition =
-          'top 0.5s ease-out, left 0.5s ease-out, ' +
-          'width 0.5s ease-out, height 0.5s ease-out, ' +
-          'background 0.5s ease-out';
-        document.body.appendChild(temp);
-        setTimeout(() => {
-          const button = _this.button.PANEL_BOTTOM_RIGHT;
-          const buttonRect = button.getBoundingClientRect();
-          temp.style.top = `${buttonRect.top + window.scrollY}px`;
-          temp.style.left = `${buttonRect.left}px`;
-          temp.style.width = `${button.offsetWidth}px`;
-          temp.style.height = `${button.offsetHeight}px`;
-          temp.style.background = 'rgb(255, 100, 60, 0)';
-        }, 0);
-        setTimeout(() => {
-          document.body.removeChild(temp);
-        }, 500);*/
-      });
-      return element;
-    }
-  }
-
-  call() {
-    this.lineMessage('직원을 호출하였습니다. 잠시만 기다려주세요.');
-    this.button.PANEL_BOTTOM_LEFT.disabled = true;
-    this.button.PANEL_BOTTOM_RIGHT.disabled = true;
+    this.panel.setAttribute('phase', 'cart');
+    this.panel.querySelector('#button-panel-cart-right .text').innerText =
+      '담은 메뉴 주문하기';
+    this.panel.querySelector('#button-panel-cart-left').disabled = true;
+    this.panel.querySelector('#button-panel-cart-right').disabled = true;
     setTimeout(() => {
-      this.button.PANEL_BOTTOM_LEFT.disabled = false;
-      this.button.PANEL_BOTTOM_RIGHT.disabled = false;
+      this.panel.querySelector('#button-panel-cart-right').disabled = false;
     }, 1000);
-  }
 
-  addMenu(menu) {
-    if (!this.client.cart[menu.id]) {
-      this.client.cart[menu.id] = 0;
-    }
+    this.updateLabel({});
 
-    const menuElement = document.querySelector(`[menu="${menu.id}"]`);
-    this.client.cart[menu.id] += 1;
-    menuElement.querySelector('.buttons > .count').innerHTML =
-      this.client.cart[menu.id];
-    menuElement.querySelector('.buttons').classList.remove('hide');
+    MAIN.scrollOff();
+  },
 
-    this.PANEL_BOTTOM$updateLabel();
-  }
+  async order() {
+    this.panel.querySelector(
+      '.fg-content > .order > .message > .main'
+    ).innerHTML = '주문 처리 중...';
+    this.panel.querySelector(
+      '.fg-content > .order > .message > .sub'
+    ).innerHTML = '잠시만 기다려주세요';
+    this.panel.querySelector('#button-panel-cart-left .text').innerText =
+      '닫기';
+    this.panel.querySelector('#button-panel-cart-left').disabled = true;
 
-  removeMenu(menu) {
-    if (!this.client.cart[menu.id]) {
+    this.panel.setAttribute('phase', 'order');
+
+    this.orderProcessing = true;
+    await CLIENT.orderMenuInCart();
+    this.orderProcessing = false;
+
+    this.panel.querySelector(
+      '.fg-content > .order > .message > .main'
+    ).innerHTML = '주문이 완료되었습니다';
+    this.panel.querySelector(
+      '.fg-content > .order > .message > .sub'
+    ).innerHTML = '이 창을 닫아 주세요';
+    this.panel.querySelector('#button-panel-cart-left').disabled = false;
+
+    this.updateLabel({});
+  },
+
+  close() {
+    if (this.orderProcessing) {
       return;
     }
 
-    const menuElement = document.querySelector(`[menu="${menu.id}"]`);
-    this.client.cart[menu.id] -= 1;
-    menuElement.querySelector('.buttons > .count').innerHTML =
-      this.client.cart[menu.id];
+    this.panel.setAttribute('phase', 'close');
+    this.panel.querySelector('#button-panel-cart-left .text').innerText =
+      '직원 호출';
+    this.panel.querySelector('#button-panel-cart-right .text').innerText =
+      '담은 메뉴 보기';
+    this.panel.querySelector('#button-panel-cart-left').disabled = false;
+    this.panel.querySelector('#button-panel-cart-right').disabled = false;
 
-    if (this.client.cart[menu.id] <= 0) {
-      delete this.client.cart[menu.id];
-      menuElement.querySelector('.buttons').classList.add('hide');
+    this.updateLabel(CLIENT.cart);
+
+    MAIN.scrollOn();
+  },
+
+  call() {
+    this.lineMessage('직원을 호출하였습니다. 잠시만 기다려주세요.');
+
+    CLIENT.call();
+
+    this.panel.querySelector('#button-panel-cart-left').disabled = true;
+    this.panel.querySelector('#button-panel-cart-right').disabled = true;
+    setTimeout(() => {
+      this.panel.querySelector('#button-panel-cart-left').disabled = false;
+      this.updateLabel(CLIENT.cart);
+    }, 1000);
+  },
+
+  updateLabel(cart) {
+    let total = 0;
+    for (const menu in cart) {
+      total += cart[menu];
     }
 
-    this.PANEL_BOTTOM$updateLabel();
-  }
+    const countElement = this.panel.querySelector(
+      '#button-panel-cart-right > .count'
+    );
+    countElement.innerHTML = `메뉴 ${total}개 담음`;
 
-  MAIN = {
-    displayBooth() {},
-
-    displayMenu() {
-      let categories = {};
-
-      for (const [menu, menuID] in Object.entries(this.client.menu)) {
-        if (!categories[menu.category]) {
-          const categoryElement = this.client.MENU.getCategoryElement(menu);
-          categories[menu.category] = categoryElement;
-        }
-
-        const menuElement = this.client.MENU.getElement(menu);
-        menuElement.addEventListener('click', (event) => {
-          let target = event.target;
-          let mode = 'normal';
-          while (!target.classList.contains('menu')) {
-            if (target.classList.contains('remove')) {
-              mode = 'remove';
-            }
-            if (target.classList.contains('add')) {
-              mode = 'add';
-            }
-            target = target.parentElement;
-          }
-
-          const menuID = target.getAttribute('menu');
-          const menu = this.client.menu[menuID];
-
-          if (mode == 'normal' && !this.client.cart[menu.id]) {
-            blink();
-            this.addMenu(menu);
-          } else if (mode == 'add') {
-            blink();
-            this.addMenu(menu);
-          } else if (mode == 'remove') {
-            blink();
-            this.removeMenu(menu);
-          }
-
-          function blink() {
-            target.style.background = 'rgba(255, 100, 60, 0.5)';
-            setTimeout(() => {
-              target.style.background = 'rgba(255, 100, 60, 0)';
-              target.style.transition = 'background 0.4s ease-out';
-            }, 100);
-            setTimeout(() => {
-              target.style.background = null;
-              target.style.transition = null;
-            }, 500);
-          }
-        });
-
-        categories[menu.category]
-          .querySelector('.content')
-          .appendChild(menuElement);
-      }
-
-      document.querySelector('#menu').innerHTML = '';
-      for (const category in categories) {
-        document.querySelector('#menu').appendChild(categories[category]);
-      }
-    },
-
-    updateMenu() {},
-
-    createCategoryElement(data) {
-      const element = document.createElement('div');
-      element.classList.add('category');
-      element.setAttribute('category', data);
-      let html = ``;
-      html += `<div class="title">${data}</div>`;
-      html += `<div class="content">`;
-      html += `</div>`;
-      element.innerHTML = html;
-      return element;
-    },
-
-    createMenuElement() {
-      const element = document.createElement('div');
-      element.classList.add('menu');
-      element.setAttribute('menu', data.id);
-      let html = ``;
-      html += `<div class="wrapper">`;
-      if (data.image) {
-        html += `  <div class="image">`;
-        html += `    <img src="${data.image}" />`;
-        html += `  </div>`;
-      }
-      html += `  <div class="text">`;
-      html += `    <div class="desc">`;
-      html += `      <div class="title">`;
-      html += `        <span class="text">${data.name}</span>`;
-      html += `        <div class="buttons hide">`;
-      html += `          <button class="remove"><span class="material-symbols-outlined"> remove </span></button>`;
-      html += `          <div class="count">0</div>`;
-      html += `          <button class="add"><span class="material-symbols-outlined"> add </span></button>`;
-      html += `        </div>`;
-      html += `      </div>`;
-      html += `      <div class="content">${data.desc}</div>`;
-      html += `    </div>`;
-      html += `    <div class="price">${data.price.toLocaleString(
-        'ko-KR'
-      )} 원</div>`;
-      html += `  </div>`;
-      html += `</div>`;
-      element.innerHTML = html;
-      return element;
-    },
-  };
-
-  PANEL_MENU = {
-    open(menu) {},
-
-    close() {},
-  };
-
-  PANEL_CART = {
-    open() {
-      this.element.panel.bottom.setAttribute('phase', 'cart');
-      this.button.PANEL_BOTTOM_RIGHT.querySelector('.text').innerText =
-        '주문하기';
-      this.button.PANEL_BOTTOM_LEFT.disabled = true;
-      this.button.PANEL_BOTTOM_RIGHT.disabled = true;
-      setTimeout(() => {
-        this.button.PANEL_BOTTOM_RIGHT.disabled = false;
-      }, 1000);
-      this.PANEL_BOTTOM$updateLabel(true);
-    },
-
-    displayMenu() {},
-
-    updateMenu() {},
-
-    order() {
-      this.element.panel.bottom.setAttribute('phase', 'order');
-      this.button.PANEL_BOTTOM_LEFT.querySelector('.text').innerText = '닫기';
-      this.button.PANEL_BOTTOM_LEFT.disabled = true;
-      setTimeout(() => {
-        this.button.PANEL_BOTTOM_LEFT.disabled = false;
-      }, 1000);
-      this.PANEL_BOTTOM$updateLabel(true);
-    },
-
-    close() {
-      this.element.panel.bottom.setAttribute('phase', '');
-      this.button.PANEL_BOTTOM_LEFT.querySelector('.text').innerText =
-        '직원 호출';
-      this.button.PANEL_BOTTOM_RIGHT.querySelector('.text').innerText =
-        '담은 메뉴 보기';
-      this.button.PANEL_BOTTOM_LEFT.disabled = false;
-      this.button.PANEL_BOTTOM_RIGHT.disabled = false;
-      this.PANEL_BOTTOM$updateLabel();
-    },
-
-    updateLabel(hide = false) {
-      let total = 0;
-      if (!hide) {
-        for (const menu in this.client.cart) {
-          total += this.client.cart[menu];
-        }
-      }
-
-      const count = this.button.PANEL_BOTTOM_RIGHT.querySelector('.count');
-      count.innerText = `메뉴 ${total}개 담음`;
+    if (this.panel.getAttribute('phase') == 'close') {
       if (total <= 0) {
-        count.setAttribute('phase', 'hide');
+        countElement.setAttribute('phase', 'hide');
+        this.panel.querySelector('#button-panel-cart-right').disabled = true;
       } else {
-        count.setAttribute('phase', 'show');
+        countElement.setAttribute('phase', 'show');
+        this.panel.querySelector('#button-panel-cart-right').disabled = false;
       }
-    },
-  };
+    } else {
+      countElement.setAttribute('phase', 'hide');
+    }
+  },
 
-  PANEL_HISTORY = {
-    open() {},
+  updateTotal(menus, cart) {
+    let total = 0;
+    let price = 0;
+    for (const menu in cart) {
+      total += cart[menu];
+      price += menus[menu]?.price * cart[menu];
+    }
 
-    close() {},
-  };
-
-  PANEL_OPTIONS = {
-    open() {},
-
-    close() {},
-  };
-
-  openHistory() {}
-
-  closeHistory() {}
+    const countElement = this.panel.querySelector(
+      '#button-panel-cart-right > .count'
+    );
+    countElement.innerHTML = `메뉴 ${total}개 담음`;
+    this.panel.querySelector(
+      '.fg-content .total > .count'
+    ).innerHTML = `메뉴 ${total}개 담음`;
+    this.panel.querySelector(
+      '.fg-content .total > .price'
+    ).innerHTML = `${price.toLocaleString('ko-KR')}원`;
+  },
 
   lineMessage(content) {
-    const messages = document.querySelector('#panel-bottom > .fg-message');
+    const messages = this.panel.querySelector('.fg-message');
     const message = document.createElement('div');
     message.setAttribute('phase', 'hide');
     message.setAttribute('linemessage', '');
@@ -624,49 +684,100 @@ class UI {
     setTimeout(() => {
       messages.removeChild(message);
     }, 5500);
-  }
-}
-
-window.Client = new Client();
-
-window.modal = async () => {
-  return new Promise((resolve) => {
-    const background = document.createElement('div');
-    background.style.position = 'fixed';
-    background.style.width = '100%';
-    background.style.height = '100vh';
-
-    const modal = document.createElement('div');
-    resolve();
-  });
+  },
 };
 
-document.addEventListener('scroll', (event) => {
-  scroll();
-});
+const PANEL_HISTORY = {
+  panel: document.querySelector('#panel-history'),
 
-function scroll() {
-  const h = document.querySelector('header');
-  const s = scrollY;
-  const ht = h.offsetTop;
-  const hb = ht + h.clientHeight;
+  init() {
+    document
+      .querySelector('#button-history')
+      .addEventListener('click', async (event) => {
+        this.open(CLIENT.history);
+      });
+  },
 
-  let p2 = Math.min(100, Math.max(0, (s / ht) * 100));
+  open(history) {
+    let totalCount = 0;
+    let totalPrice = 0;
 
-  const nav = document.querySelector('nav');
-  const shadow = document.querySelector('#cover > .shadow');
+    const orders = {};
+    for (const order of history) {
+      if (!orders[order.timestamp]) {
+        orders[order.timestamp] = [];
+      }
+      orders[order.timestamp].push({
+        menuId: order.menu_id,
+        menu_name: order.menu_name,
+        description: '',
+        price: order.price,
+        count: order.quantity,
+        state: order.state,
+      });
+      totalCount += order.quantity;
+      totalPrice += order.price * order.quantity;
+    }
 
-  shadow.style.background = `rgba(0,0,0,${p2 / 200})`;
-  shadow.style.webkitBackdropFilter = `blur(${p2 / 10}px)`;
-  shadow.style.backdropFilter = `blur(${p2 / 10}px)`;
+    let html = ``;
+    html += `<div class="top">`;
+    html += `  <button id="button-panel-menu-close">`;
+    html += `    <span class="material-symbols-outlined"> arrow_back </span>`;
+    html += `  </button>`;
+    html += `  <div class="title">주문 기록</div>`;
+    html += `</div>`;
+    html += `<div class="main">`;
+    html += `  <div class="topmargin"></div>`;
+    html += `  <div class="history"></div>`;
+    html += `  <div class="total">`;
+    html += `    <div class="count">${totalCount.toLocaleString(
+      'ko-KR'
+    )}개 메뉴 주문함</div>`;
+    html += `    <div class="price">합계 ${totalPrice.toLocaleString(
+      'ko-KR'
+    )}원</div>`;
+    html += `  </div>`;
+    html += `</div>`;
+    html += `<div class="bottom">`;
+    html += `  <button id="button-panel-menu-close2">닫기</button>`;
+    html += `</div>`;
 
-  if (s < ht) {
-    nav.style.opacity = '0';
-    nav.style.pointerEvents = 'none';
-  } else {
-    nav.style.opacity = '1';
-    nav.style.pointerEvents = 'all';
-  }
-}
+    this.panel.innerHTML = html;
 
-scroll();
+    let i = 1;
+    for (const timestamp in orders) {
+      const order = document.createElement('div');
+      order.classList.add('order');
+      let html = ``;
+      html += `<div class="title">주문 #${i}</div>`;
+      html += `<div class="content"></div>`;
+      order.innerHTML = html;
+      for (const menu of orders[timestamp]) {
+        const menuElement = MAIN.getMenuElement(menu);
+        order.querySelector('.content').appendChild(menuElement);
+      }
+      this.panel.querySelector('.history').appendChild(order);
+      i++;
+    }
+
+    this.panel.querySelector('.top button').addEventListener('click', () => {
+      this.close();
+    });
+    this.panel.querySelector('.bottom button').addEventListener('click', () => {
+      this.close();
+    });
+
+    this.panel.setAttribute('phase', 'open');
+    MAIN.scrollOff();
+  },
+
+  close() {
+    this.panel.setAttribute('phase', 'close');
+    MAIN.scrollOn();
+  },
+};
+
+const bid = window.cookies('booth');
+const tid = window.cookies('table');
+
+window.CLIENT = new Client(bid, tid);
